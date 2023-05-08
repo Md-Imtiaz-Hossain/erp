@@ -1,6 +1,9 @@
 package com.brainstation23.erp.controller.web;
 
 import com.brainstation23.erp.model.domain.Revenue;
+import com.brainstation23.erp.model.dto.request.CreateRevenueRequest;
+import com.brainstation23.erp.model.dto.request.UpdateRevenueRequest;
+import com.brainstation23.erp.model.dto.request.UpdateRoleRequest;
 import com.brainstation23.erp.service.RevenueService;
 import com.brainstation23.erp.service.RoleService;
 import com.brainstation23.erp.service.UserService;
@@ -8,10 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.UUID;
 
 import static org.springframework.beans.support.PagedListHolder.DEFAULT_PAGE_SIZE;
 
@@ -27,53 +34,68 @@ public class RevenueController {
     @GetMapping
     public ModelAndView getAssets(@RequestParam(defaultValue = "0") int page, Principal principal) {
         var modelAndView = new ModelAndView("revenue/list");
-        Page<Revenue> assets = revenueService.getAll(PageRequest.of(page, DEFAULT_PAGE_SIZE));
+        Page<Revenue> revenues = revenueService.getAll(PageRequest.of(page, DEFAULT_PAGE_SIZE));
         modelAndView.addObject("pageTitle", "Revenue List");
         modelAndView.addObject("loggedInUser", userService.getLoggedInUser(principal));
-        modelAndView.addObject("assets", assets);
-        modelAndView.addObject("pagesForPagination", assets);
+        modelAndView.addObject("revenues", revenues);
+        modelAndView.addObject("pagesForPagination", revenues);
         modelAndView.addObject("url", "/revenue");
         return modelAndView;
     }
 
-//
-//    @GetMapping("/{id}/")
-//    public ModelAndView getRole(@PathVariable UUID id, Principal principal) {
-//        var modelAndView = new ModelAndView("role/single");
-//        Role role = roleService.getRole(id);
-//        modelAndView.addObject("pageTitle", "Role Details");
-//        modelAndView.addObject("loggedInUser", userService.getLoggedInUser(principal));
-//        modelAndView.addObject("role", role);
-//        return modelAndView;
-//    }
-//
-//    @GetMapping("/create")
-//    public ModelAndView createRolePage(Principal principal) {
-//        var modelAndView = new ModelAndView("role/new-role");
-//        var createRoleRequest = new CreateRoleRequest();
-//        modelAndView.addObject("pageTitle", "Add Role");
-//        modelAndView.addObject("loggedInUser", userService.getLoggedInUser(principal));
-//        modelAndView.addObject("role", createRoleRequest);
-//        return modelAndView;
-//    }
-//
-//    @PostMapping
-//    public String createRole(@Valid @ModelAttribute("role") CreateRoleRequest request, BindingResult bindingResult, Model model, Principal principal) {
-//        try {
-//            if (bindingResult.hasErrors()) {
-//                model.addAttribute("pageTitle", "Add Role");
-//                model.addAttribute("loggedInUser", userService.getLoggedInUser(principal));
-//                model.addAttribute("role", request);
-//                return "role/new-role";
-//            }
-//            roleService.createRole(request);
-//            return "redirect:/roles";
-//        } catch (Exception e) {
-//            return "redirect:/roles/create";
-//        }
-//    }
+    @GetMapping("/create")
+    public ModelAndView createRevenuePage(Principal principal) {
+        var modelAndView = new ModelAndView("revenue/new-revenue");
+        var createRevenueRequest = new CreateRevenueRequest();
+        modelAndView.addObject("pageTitle", "Add Revenue");
+        modelAndView.addObject("loggedInUser", userService.getLoggedInUser(principal));
+        modelAndView.addObject("revenue", createRevenueRequest);
+        return modelAndView;
+    }
+
+    @PostMapping
+    public String createRevenue(@Valid @ModelAttribute("revenue") CreateRevenueRequest request, BindingResult bindingResult,
+                                Model model, Principal principal) {
+        try {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("pageTitle", "Add Revenue");
+                model.addAttribute("loggedInUser", userService.getLoggedInUser(principal));
+                model.addAttribute("revenue", request);
+                return "revenue/new-revenue";
+            }
+            revenueService.createOne(request);
+            return "redirect:/revenue";
+        } catch (Exception e) {
+            return "redirect:/revenue/create";
+        }
+    }
 
 
+    @GetMapping("/{id}/update")
+    public ModelAndView updateRevenuePage(@PathVariable UUID id, Principal principal) {
+        var modelAndView = new ModelAndView("revenue/update-revenue");
+        var revenueServiceOne = revenueService.getOne(id);
+        modelAndView.addObject("pageTitle", "Update Revenue");
+        modelAndView.addObject("loggedInUser", userService.getLoggedInUser(principal));
+        modelAndView.addObject("revenue", revenueServiceOne);
+        return modelAndView;
+    }
 
+    @PostMapping("/update/{id}")
+    public String updateRole(@Valid @ModelAttribute("role") UpdateRevenueRequest request, @PathVariable UUID id, BindingResult bindingResult,
+                             Model model, Principal principal) {
+        try {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("pageTitle", "Update Revenue");
+                model.addAttribute("loggedInUser", userService.getLoggedInUser(principal));
+                model.addAttribute("revenue", request);
+                return "revenue/update-revenue";
+            }
+            revenueService.updateOne(id, request);
+            return "redirect:/revenue";
+        } catch (Exception e) {
+            return "redirect:/revenue";
+        }
+    }
 
 }

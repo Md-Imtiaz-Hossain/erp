@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @ToString
 @Getter
 @Setter
-public class CreateRevenueRequest {
+public class UpdateRevenueRequest {
 
     private BigDecimal companyRevenue;
     @NotEmpty(message = "Revenue purpose must be fill up.")

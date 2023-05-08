@@ -13,7 +13,7 @@
 <main class="main" id="main">
 
     <div class="pagetitle">
-        <h1>Revenue <a class="btn btn-outline-success" th:href="@{/templates/revenue/create}"> <i
+        <h1>Revenue <a class="btn btn-outline-success" th:href="@{/revenue/create}"> <i
                 class="fas bi-plus"></i></a></h1>
     </div><!-- End Page Title -->
 
@@ -37,7 +37,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="a: ${revenue}">
+                            <tr th:each="a: ${revenues}">
                                 <td th:text="${a.companyRevenue}"></td>
                                 <td th:text="${a.revenuePurpose}"></td>
                                 <td th:text="${a.revenueGettingDate}"></td>
@@ -45,9 +45,6 @@
                                 <td>
                                     <a class="btn btn-sm btn-primary" th:href="@{'/revenue/' + ${a.id} + '/update'}"><i
                                             class="fas bi-pen"></i></a>
-                                    <a class="btn btn-sm btn-danger" href="#"
-                                       th:onclick="deleteItem([[${a.id}]], '/revenue/', 'Assets')"><i
-                                            class="fas bi-trash"></i></a>
                                 </td>
                             </tr>
                             </tbody>
