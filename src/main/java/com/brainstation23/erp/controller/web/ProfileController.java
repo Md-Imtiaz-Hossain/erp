@@ -58,35 +58,4 @@ public class ProfileController {
             return "redirect:/profile/" + id + "/update";
         }
     }
-
-
-//    @PostMapping("/save")
-//    public String createUser(@Valid @ModelAttribute("user") CreateUserRequest request, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-//        try {
-//            if (bindingResult.hasErrors()) {
-//                model.addAttribute("pageTitle", "Add User");
-//                model.addAttribute("user", request);
-//                model.addAttribute("roles", roleService.getRoles(Pageable.unpaged()));
-//                return "register/new-user";
-//            }
-//
-//            List<RoleEntity> roles = roleService.getRolesS();
-//            Set<RoleEntity> userRoles = new HashSet<>();
-//            for (RoleEntity role : roles) {
-//                if (role.getName().equals("Employee")) {
-//                    userRoles.add(role);
-//                }
-//            }
-//            request.setRoles(userRoles);
-//            request.setEnable(true);
-//            userService.createUser(request);
-//            redirectAttributes.addFlashAttribute("responseMessage", new ResponseMessage("alert-success", "Registration Success"));
-//            return "redirect:/register/create";
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("responseMessage", new ResponseMessage("alert-danger", e.getMessage()));
-//            return "redirect:/register/create";
-//        }
-//    }
-
-
 }
