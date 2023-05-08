@@ -1,5 +1,6 @@
 package com.brainstation23.erp.controller.web;
 
+import com.brainstation23.erp.service.RevenueService;
 import com.brainstation23.erp.service.RoleService;
 import com.brainstation23.erp.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class HomeController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final RevenueService revenueService;
 
     @GetMapping
     public String home(Model model) {
@@ -29,6 +31,7 @@ public class HomeController {
         model.addAttribute("loggedInUser", userService.getLoggedInUser(principal));
         model.addAttribute("totalUser",userService.countTotalUser());
         model.addAttribute("totalRole",roleService.countTotalRole());
+        model.addAttribute("totalRevenue",revenueService.getTotalCompanyRevenue());
         model.addAttribute("pageTitle", "Dashboard");
         return "index";
     }

@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -55,6 +57,13 @@ public class RevenueService {
                 .setRevenueGettingDate(updateRequest.getRevenueGettingDate())
                 .setRevenueFrom(updateRequest.getRevenueFrom());
         revenueRepository.save(entity);
+    }
+
+    public BigDecimal getTotalCompanyRevenue() {
+        List<RevenueEntity> revenueEntities = revenueRepository.findAll();
+        return revenueEntities.stream()
+                .map(RevenueEntity::getCompanyRevenue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }
