@@ -1,5 +1,6 @@
 package com.brainstation23.erp.controller.web;
 
+import com.brainstation23.erp.service.RoleService;
 import com.brainstation23.erp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -14,6 +15,7 @@ import java.security.Principal;
 public class HomeController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @GetMapping
     public String home(Model model) {
@@ -23,7 +25,10 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public String afterLoginAdminPanel(Principal principal, Model model) {
+        userService.countTotalUser();
         model.addAttribute("loggedInUser", userService.getLoggedInUser(principal));
+        model.addAttribute("totalUser",userService.countTotalUser());
+        model.addAttribute("totalRole",roleService.countTotalRole());
         model.addAttribute("pageTitle", "Dashboard");
         return "index";
     }

@@ -62,4 +62,8 @@ public class RoleService {
     	roleEntity.getUsers().removeAll(users);
         roleRepository.deleteById(id);
     }
+
+    public Long countTotalRole() {
+        return roleRepository.count();
+    }
 }
