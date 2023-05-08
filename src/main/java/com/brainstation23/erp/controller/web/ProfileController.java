@@ -2,6 +2,7 @@ package com.brainstation23.erp.controller.web;
 
 import com.brainstation23.erp.model.domain.User;
 import com.brainstation23.erp.model.dto.request.CreateUserRequest;
+import com.brainstation23.erp.model.dto.request.UpdateUserPasswordFromProfile;
 import com.brainstation23.erp.model.dto.request.UpdateUserRequest;
 import com.brainstation23.erp.model.dto.request.UpdateUserRequestFromProfile;
 import com.brainstation23.erp.model.dto.response.ResponseMessage;
@@ -52,6 +53,24 @@ public class ProfileController {
                 return "profile/view";
             }
             userService.updateUserName(request, id);
+            return "redirect:/profile";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("responseMessage", new ResponseMessage("alert-danger",   e.getMessage()));
+            return "redirect:/profile/" + id + "/update";
+        }
+    }
+
+    @PostMapping("/passwordUpdate/{id}")
+    public String updateUserPassword(@Valid @ModelAttribute("user") UpdateUserPasswordFromProfile request,
+                             @PathVariable UUID id, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes, Model model, Principal principal) {
+        try {
+            if (bindingResult.hasFieldErrors("id")) {
+                model.addAttribute("loggedInUser", userService.getLoggedInUser(principal));
+                model.addAttribute("user", request);
+                return "profile/view";
+            }
+            userService.updateUserPassword(request, id);
             return "redirect:/profile";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("responseMessage", new ResponseMessage("alert-danger",   e.getMessage()));

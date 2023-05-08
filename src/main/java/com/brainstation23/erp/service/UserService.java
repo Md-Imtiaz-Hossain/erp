@@ -5,6 +5,7 @@ import com.brainstation23.erp.exception.custom.custom.NotFoundException;
 import com.brainstation23.erp.mapper.UserMapper;
 import com.brainstation23.erp.model.domain.User;
 import com.brainstation23.erp.model.dto.request.CreateUserRequest;
+import com.brainstation23.erp.model.dto.request.UpdateUserPasswordFromProfile;
 import com.brainstation23.erp.model.dto.request.UpdateUserRequest;
 import com.brainstation23.erp.model.dto.request.UpdateUserRequestFromProfile;
 import com.brainstation23.erp.persistence.repository.UserRepository;
@@ -83,9 +84,10 @@ public class UserService {
 		userRepository.save(userEntity);
 	}
 
-	public void updateUserPassword(String userName, String password) {
-		var userEntity = userRepository.findByEmail(userName).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-		userEntity.setPassword(password);
+	public void updateUserPassword(UpdateUserPasswordFromProfile request, UUID id) {
+		var userEntity = userRepository.findById(id).orElseThrow(()-> new NotFoundException(USER_NOT_FOUND));
+		String encodedPassword = encodePasswordUsingString(request.getPassword());
+		userEntity.setPassword(encodedPassword);
 		userRepository.save(userEntity);
 	}
 	
