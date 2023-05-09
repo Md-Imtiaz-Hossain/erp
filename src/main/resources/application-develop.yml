@@ -1,13 +1,14 @@
 # ============== Ubuntu mysql info ==========
 spring:
   datasource:
-    password: Root@#_88888888
-    username: root
-    url: jdbc:mysql://localhost:3306/erp
+    url: jdbc:postgresql://dpg-chcc5uu7avjcvo74sj0g-a.oregon-postgres.render.com/erp_yjhy
+    username: erp_yjhy_user
+    password: ta5LeFLINtCb2uhVByc5xtG7CbsFZqug
   jpa:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
