@@ -44,23 +44,34 @@
                             </diV>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="revenuePurpose">Purpose of this revenue</label>
+                                <label class="col-sm-2 col-form-label" for="revenuePurpose">Purpose of this
+                                    revenue</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control"
-                                           id="revenuePurpose"
-                                           name="revenuePurpose"
-                                           placeholder="Revenue purpose"
-                                           required
-                                           th:classappend="${#fields.hasErrors('revenuePurpose') ? 'is-invalid' : ''}"
-                                           th:field="*{revenuePurpose}"
-                                           th:value="${revenue.revenuePurpose}"
-                                           type="text"
-                                    >
+                                    <select class="form-control"
+                                            id="revenuePurpose"
+                                            name="revenuePurpose"
+                                            required
+                                            th:classappend="${#fields.hasErrors('revenuePurpose') ? 'is-invalid' : ''}"
+                                            th:field="*{revenuePurpose}">
+                                        <option value="">Select revenue purpose</option>
+                                        <option value="Developing"
+                                                th:selected="${revenue.revenuePurpose == 'Developing'}">Developing
+                                        </option>
+                                        <option value="Testing" th:selected="${revenue.revenuePurpose == 'Testing'}">
+                                            Testing
+                                        </option>
+                                        <option value="Maintenance"
+                                                th:selected="${revenue.revenuePurpose == 'Maintenance'}">Maintenance
+                                        </option>
+                                        <option value="Deployment"
+                                                th:selected="${revenue.revenuePurpose == 'Deployment'}">Deployment
+                                        </option>
+                                    </select>
                                     <div class="invalid-feedback" style="font-size: 15px"
                                          th:each="error : ${#fields.errors('revenuePurpose')}" th:text="${error}">
                                     </div>
                                 </div>
-                            </diV>
+                            </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="revenueGettingDate">Revenue Getting Date</label>
@@ -84,21 +95,22 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="revenuePurpose">Revenue from</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control"
-                                           id="revenueFrom"
-                                           name="revenueFrom"
-                                           placeholder="Revenue from"
-                                           required
-                                           th:classappend="${#fields.hasErrors('revenueFrom') ? 'is-invalid' : ''}"
-                                           th:field="*{revenueFrom}"
-                                           th:value="${revenue.revenueFrom}"
-                                           type="text"
-                                    >
+                                    <select class="form-control" id="revenueFrom" name="revenueFrom" required
+                                            th:classappend="${#fields.hasErrors('revenueFrom') ? 'is-invalid' : ''}"
+                                            th:field="*{revenueFrom}">
+                                        <option value="">Select revenue getting from</option>
+                                        <option value="Individual" th:selected="${revenue.revenueFrom == 'Individual'}">
+                                            Individual
+                                        </option>
+                                        <option value="Company" th:selected="${revenue.revenueFrom == 'Company'}">
+                                            Company
+                                        </option>
+                                    </select>
                                     <div class="invalid-feedback" style="font-size: 15px"
                                          th:each="error : ${#fields.errors('revenueFrom')}" th:text="${error}">
                                     </div>
                                 </div>
-                            </diV>
+                            </div>
 
                             <div class="row">
                                 <div class="col text-center">
