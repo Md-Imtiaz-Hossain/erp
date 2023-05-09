@@ -4,6 +4,7 @@ public final class EntityConstant {
 	public static final String ORGANIZATION = "organizations";
 	public static final String USER = "users";
 	public static final String REVENUE = "revenue";
+	public static final String COST = "cost";
 	public static final String ROLE = "roles";
 
 	private EntityConstant() {

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/stylesheets::head">
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="fragments/header::header"></header>
+
+<!-- ======= Sidebar ======= -->
+<aside th:replace="fragments/sidebar::sidebarMenu"></aside>
+
+<main class="main" id="main">
+
+    <div class="pagetitle">
+        <h1>Cost <a class="btn btn-outline-success" th:href="@{/cost/create}"> <i
+                class="fas bi-plus"></i></a></h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cost List</h5>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th>Cost</th>
+                                <th>Cost Purpose</th>
+                                <th>Cost Date</th>
+                                <th>Employee Id</th>
+                                <th>Cost Details</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="c: ${costs}">
+                                <td th:text="${c.companyCost}"></td>
+                                <td th:text="${c.costPurpose}"></td>
+                                <td th:text="${c.costDate}"></td>
+                                <td th:text="${c.employeeId}"></td>
+                                <td th:text="${c.costDetails}"></td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" th:href="@{'/cost/' + ${c.id} + '/update'}"><i
+                                            class="fas bi-pen"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer class="main-footer" th:replace="fragments/footer::footer"></footer>
+
+<a class="back-to-top d-flex align-items-center justify-content-center" href="#"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<div th:replace="fragments/scripts :: scripts"></div>
+
+</body>
+
+</html>
+
